@@ -12,6 +12,7 @@ class Locators:
     CreateAccountPage locators
     """
     FIRST_NAME = (By.ID, "customer_firstname")
+    LAST_NAME = (By.ID, "customer_lastname")
     GENDER_MALE = (By.XPATH, '//label[@for="id_gender1"]')
     GENDER_FEMALE = (By.XPATH, '//label[@for="id_gender2"]')
     EMAIL = (By.ID, 'email')
@@ -21,6 +22,7 @@ class Locators:
     BIRTH_MONTH_SELECT = (By.ID, 'months')
     BIRTH_YEAR_SELECT = (By.ID, 'years')
     VISIBLE_ERRORS = (By.XPATH, '//div[@class="alert alert-danger"]/ol/li')
+    NUMBER_VISIBLE_ERRORS = (By.XPATH, '//div[@class="alert alert-danger"]/p')
 
 
 class CreateAccountPage(BasePage):
@@ -41,6 +43,12 @@ class CreateAccountPage(BasePage):
         Enter First Name
         """
         self.driver.find_element(*Locators.FIRST_NAME).send_keys(first_name)
+
+    def enter_last_name(self, last_name):
+        """
+        Enter Last Name
+        """
+        self.driver.find_element(*Locators.LAST_NAME).send_keys(last_name)
 
     def enter_password(self, password):
         """
@@ -70,6 +78,12 @@ class CreateAccountPage(BasePage):
         Get Email entered on previous page
         """
         return self.driver.find_element(*Locators.EMAIL).get_attribute("value")
+
+    def get_number_of_errors_message(self):
+        """
+        Get Number of Errors message
+        """
+        return self.driver.find_element(*Locators.NUMBER_VISIBLE_ERRORS).text
 
     def get_visible_errors(self):
         """

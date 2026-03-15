@@ -19,7 +19,24 @@ class RegistrationTest(BaseTest):
         self.create_account_page.enter_password(self.data.PASSWORD)
         self.create_account_page.select_date_of_birth(self.data.DATE_OF_BIRTH)
         self.create_account_page.click_register_button()
+        expected_number_of_errors_message = "There is 1 error"
+        actual_number_of_errors_message = self.create_account_page.get_number_of_errors_message()
+        self.assertEqual(expected_number_of_errors_message, actual_number_of_errors_message)
         visible_errors = self.create_account_page.get_visible_errors()
         expected_errors = ["lastname is required."]
         self.assertCountEqual(expected_errors, visible_errors)
-        sleep(2)
+
+
+    def testNoFirstname(self):
+        self.create_account_page.choose_gender(self.data.GENDER)
+        self.create_account_page.enter_last_name(self.data.LAST_NAME)
+        self.assertEqual(self.data.EMAIL, self.create_account_page.get_entered_email())
+        self.create_account_page.enter_password(self.data.PASSWORD)
+        self.create_account_page.select_date_of_birth(self.data.DATE_OF_BIRTH)
+        self.create_account_page.click_register_button()
+        expected_number_of_errors_message = "There is 1 error"
+        actual_number_of_errors_message = self.create_account_page.get_number_of_errors_message()
+        self.assertEqual(expected_number_of_errors_message, actual_number_of_errors_message)
+        visible_errors = self.create_account_page.get_visible_errors()
+        expected_errors = ["firstname is required."]
+        self.assertCountEqual(expected_errors, visible_errors)
