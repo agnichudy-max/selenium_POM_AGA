@@ -9,7 +9,7 @@ class Locators:
     FIRST_NAME = (By.ID, "customer_firstname")
     GENDER_MALE = (By.XPATH, '//label[@for="id_gender1"]')
     GENDER_FEMALE = (By.XPATH, '//label[@for="id_gender2"]')
-
+    EMAIL = (By.ID, 'email')
 
 class CreateAccountPage(BasePage):
     """
@@ -30,6 +30,12 @@ class CreateAccountPage(BasePage):
         """
         self.driver.find_element(*Locators.FIRST_NAME).send_keys(first_name)
 
+    def get_entered_email(self):
+        """
+        get Email entered on previous page
+
+        """
+        return self.driver.find_element(*Locators.EMAIL).get_attribute("value")
+
     def _verify_page(self):
-        # TODO: Improve this mechanism!!!
         sleep(3)
